@@ -1,19 +1,34 @@
+require("dotenv").config();
 const express = require("express");
-const User = require("./models/User");
+const User = require("./Controller/User");
 const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser");
-const { makeAgreement,setLender,setTenet,getAgreement } = require("./Controller/User");
+const { makeAgreement,setLender,setTenant,getAgreement,updateLandlordSignature,updateTenantSignature,createAgreement } = require("./Controller/User");
 const bodyParser = require("body-parser");
+const connectDB = require("./dbConnect");
+const cors = require("cors");
 
 const app = express();
+connectDB();
+const corsOptions = {
+    origin: "*",
+    credentials: true,
+  };
+  
+app.use(cors(corsOptions));
+
 const PORT = process.env.PORT || 3000;
 app.use(bodyParser.json());
 
+
+
 app.post("/makeAgreement",makeAgreement);
-app.post("/setTenet",setTenet);
+app.post("/setTenant",setTenant);
 app.post("/setLender",setLender);
 app.get("/getAgreement",getAgreement);
-
+app.patch('/:id/landlord-signature', updateLandlordSignature);
+app.patch('/:id/tenant-signature', updateTenantSignature);
+app.post('/createAgreement',createAgreement);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

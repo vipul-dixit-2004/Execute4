@@ -1,7 +1,7 @@
 const ethers = require('ethers');
 
 const {API_URL,PRIVATE_KEY,CONTRACT_ADDRESS} = process.env
-const {abi} = require('./artifacts/contracts/Agreement/');
+const {abi} = require('./artifacts/contracts/Agreement.sol/Agreement.json');
 
 const provider = new ethers.providers.JsonRpcProvider(API_URL);
 const signer = new ethers.Wallet(PRIVATE_KEY,provider);
@@ -38,9 +38,9 @@ const setLender = async (lender,agreementId)=>{
         return null;
     }    
 }
-const setTenet = async (tenet,agreementId)=>{
+const setTenant = async (tenet,agreementId)=>{
     try {
-        const response = await contract.setTenet(tenet,agreementId);
+        const response = await contract.setTenant(tenant,agreementId);
         console.log(response);
         return response
         } catch (error) {
@@ -53,5 +53,5 @@ module.exports={
     getAgreement,
     makeAgreement,
     setLender,
-    setTenet
+    setTenant
 }
