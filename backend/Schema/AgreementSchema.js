@@ -81,6 +81,10 @@ const AgreementSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  tenantAadhaar: {
+    type: String,
+    required: true
+  },
   furnishedProperty: {
     type: Boolean,
     default: false
